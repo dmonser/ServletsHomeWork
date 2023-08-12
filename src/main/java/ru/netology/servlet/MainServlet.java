@@ -34,7 +34,7 @@ public class MainServlet extends HttpServlet {
         controller.all(resp);
         return;
       }
-      if (method.equals(GET) && path.matches(PATH + "\\d+")) {
+      if (method.equals(GET) && path.matches(PATH + "/\\d+")) {
         // easy way
         final var id = parseId(path);
         controller.getById(id, resp);
@@ -44,7 +44,7 @@ public class MainServlet extends HttpServlet {
         controller.save(req.getReader(), resp);
         return;
       }
-      if (method.equals(DELETE) && path.matches(PATH + "\\d+")) {
+      if (method.equals(DELETE) && path.matches(PATH + "/\\d+")) {
         // easy way
         final var id = parseId(path);
         controller.removeById(id, resp);
@@ -58,7 +58,7 @@ public class MainServlet extends HttpServlet {
   }
 
   protected long parseId (String path) {
-      return Long.parseLong(path.substring(path.lastIndexOf("/")));
+      return Long.parseLong(path.substring(path.lastIndexOf("/") + 1));
   }
 }
 

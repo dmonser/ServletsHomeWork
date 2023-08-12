@@ -23,19 +23,37 @@ public class PostController {
     response.getWriter().print(gson.toJson(data));
   }
 
-  public void getById(long id, HttpServletResponse response) {
-    // TODO: deserialize request & serialize response
+  public void getById(long id, HttpServletResponse response) throws IOException {
+    try {
+      response.setContentType(APPLICATION_JSON);
+      final var data = service.getById(id);
+      final var gson = new Gson();
+      response.getWriter().print(gson.toJson(data));
+    } catch (Exception e) {
+      e.printStackTrace();
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    }
   }
 
   public void save(Reader body, HttpServletResponse response) throws IOException {
-    response.setContentType(APPLICATION_JSON);
-    final var gson = new Gson();
-    final var post = gson.fromJson(body, Post.class);
-    final var data = service.save(post);
-    response.getWriter().print(gson.toJson(data));
+    try {
+      response.setContentType(APPLICATION_JSON);
+      final var gson = new Gson();
+      final var post = gson.fromJson(body, Post.class);
+      final var data = service.save(post);
+      response.getWriter().print(gson.toJson(data));
+    } catch (Exception e) {
+      e.printStackTrace();
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    }
   }
 
   public void removeById(long id, HttpServletResponse response) {
-    // TODO: deserialize request & serialize response
+    try {
+      service.removeById(id);
+    } catch (Exception e) {
+      e.printStackTrace();
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    }
   }
 }
