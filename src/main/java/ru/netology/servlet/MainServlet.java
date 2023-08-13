@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class MainServlet extends HttpServlet {
+  private static final String GET = "GET";
+  private static final String POST = "POST";
+  private static final String DELETE = "DELETE";
+  private static final String PATH = "/api/posts";
   private PostController controller;
 
   @Override
@@ -20,11 +24,6 @@ public class MainServlet extends HttpServlet {
 
   @Override
   protected void service(HttpServletRequest req, HttpServletResponse resp) {
-    final var GET = "GET";
-    final var POST = "POST";
-    final var DELETE = "DELETE";
-    final var PATH = "/api/posts";
-
     // если деплоились в root context, то достаточно этого
     try {
       final var path = req.getRequestURI();
